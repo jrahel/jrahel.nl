@@ -34,9 +34,9 @@ comments :
 # Internal nav
 nav:
   - Amsterdamse_Bos: "https://jrahel.nl/photos/amsterdamse-bos/"  
-  - Keukenhof: "https://sunbliss.github.io/photos/keukenhof/"
-  - Indonesia: "https://sunbliss.github.io/photos/indonesia/"
-  - Other: "https://sunbliss.github.io/photos/misc/"
+  - Keukenhof: "https://jrahel.nl/photos/photos/keukenhof/"
+  - Indonesia: "https://jrahel.nl/photos/photos/indonesia/"
+  - Other: "https://jrahel.nl/photos/photos/misc/"
 
 # All translation keys
 translations:
