@@ -1,9 +1,9 @@
 # Site settings
-title: PHOTORAMA
-email: ""
-description: "Photo Journal"
-url: "https://sunbliss.github.io"
-baseurl: "/photorama"
+title: J Rahel
+email: "website@jrahel.nl"
+description: "J Rahel photo gallery"
+url: "https://jrahel.nl"
+baseurl: "/"
 facebook_username: ""
 twitter_username: ""
 instagram_username: ""
@@ -15,10 +15,10 @@ share: true
 
 # Owner/author information
 owner:
-  name:   photorama
+  name: J Rahel
   avatar: avatar.png
   favicon: favicon.ico
-  info: photography website template
+  info: 
 
 # Settings for comments helper
 # Set 'provider' to the comment provider you want to use. (i.e.  Disqus, Intense Debate, livefyre, or Facebook Comments)
@@ -33,9 +33,10 @@ comments :
 
 # Internal nav
 nav:
-  - GALLERY: "https://sunbliss.github.io/photorama/gallery/"  
-  - JOURNAL: "https://sunbliss.github.io/photorama/journal/"
-  - ABOUT: "https://sunbliss.github.io/photorama/about/"
+  - Amsterdamse_Bos: "https://jrahel.nl/photos/amsterdamse-bos/"  
+  - Keukenhof: "https://sunbliss.github.io/photos/keukenhof/"
+  - Indonesia: "https://sunbliss.github.io/photos/indonesia/"
+  - Other: "https://sunbliss.github.io/photos/misc/"
 
 # All translation keys
 translations:
