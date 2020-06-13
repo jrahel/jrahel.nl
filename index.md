@@ -4,6 +4,6 @@ title: J Rahel
 ---
 
 {% for gallery in site.data.galleries %}
-<a href="photos/{{ gallery.description }}">{{ gallery.description }}</a>
+<a href="photos/{{ gallery.id }}">{{ gallery.description }}</a>
 {{ gallery }}
 {% endfor %}
