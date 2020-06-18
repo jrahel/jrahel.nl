@@ -1,0 +1,25 @@
+---
+---
+[
+{% assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME,/assets/css/style.css' %}{%
+for page in site.pages %}{%
+	assign urlPrefix = page.url | slice: 0, 8 %}{%
+	unless ignored contains page.url or 
+			urlPrefix == '/client/' or
+			urlPrefix == '/server/'
+		%}	"{{ page.url }}",
+{%
+	endunless %}{%
+endfor %}{% 
+
+for static_file in site.static_files %}{% 
+	assign urlPrefix = static_file.path | slice: 0, 8 %}{%
+		unless ignored contains static_file.path or 
+				urlPrefix == '/client/' or
+				urlPrefix == '/server/'
+		%}	"{{ static_file.path }}",
+{%
+	endunless %}{% 
+endfor 
+%}	"/"
+]

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>{{ page.title | default: site.title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<link href="/client/favicon.ico" rel="shortcut icon"/>
+<link href="/client/styles/config.css" rel="stylesheet">
+<link href="/client/styles/basic.css" rel="stylesheet">
+<link href="/client/styles/gallery.css" rel="stylesheet">
+<link href="/client/fonts/open-sans/open-sans.css" rel="stylesheet">
+<link href="/client/fonts/ubuntu/ubuntu.css" rel="stylesheet">
+<link href="/client/fonts/material-icons/material-icons.css" rel="stylesheet">
+<!-- <script src="/client/scripts/turbolinks.js"></script>
+<script type="module" src="/client/scripts/gallery.js"></script> -->
+
+<header class="top-nav">
+	<a class="icon back" href="..">arrow_back</a>
+	<h1 class="site-title">{{ site.title }}</h1>
+</header>
+<article class="content">
+	<h1 class="title">{{ page.title }}</h1>
+
+	<section class="files">{%
+		assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME,/assets/css/style.css' %}{%
+		assign urlLength = page.url | size %}{%
+		
+		for otherPage in site.pages %}{%
+			assign urlPrefix1 = otherPage.url | slice: 0, urlLength %}{%
+			assign urlPrefix2 = otherPage.url | slice: 0, 8 %}{%
+			unless urlPrefix1 != page.url or
+					page.url == otherPage.url or
+					ignored contains otherPage.url or 
+					urlPrefix2 == '/client/' or
+					urlPrefix2 == '/server/' %}{%
+				if otherPage.name == 'index.md' or
+						otherPage.name == 'index.html' %}{%
+					assign endIndex = otherPage.url | size | minus: 2 %}{%
+					assign otherPageTrimmedPath = otherPage.url | slice: 1, endIndex 
+					%}		<a href="{{ otherPage.url }}">{{ otherPageTrimmedPath }}</a>
+{%				else
+					%}		<a href="{{ otherPage.url }}">{{ otherPage.name }}</a>
+{%				endif  %}{%
+			endunless %}{%
+		endfor %}{% 
+		 
+		for static_file in site.static_files %}{%
+			assign urlPrefix1 = static_file.path | slice: 0, urlLength %}{%
+			assign urlPrefix2 = static_file.path | slice: 0, 8 %}{%
+			unless urlPrefix1 != page.url or
+					page.url == static_file.path or
+					ignored contains static_file.path or 
+					urlPrefix2 == '/client/' or
+					urlPrefix2 == '/server/'
+				%}		<a href="{{ static_file.path }}">{{ static_file.name }}</a>
+{%
+			endunless %}{%
+		endfor
+	%}</section>
+	
+</article>

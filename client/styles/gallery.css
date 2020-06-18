@@ -1,0 +1,110 @@
+.top-nav {
+    height: 64px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* box-shadow: 0 0 8px #0000008a; */
+    padding: 14px 0;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.top-nav > * {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    margin-left: 14px;
+}
+
+.site-title {
+    color: var(--text-color-misc);
+    font-size: 18px;
+    font-weight: 600;
+    height: 31px;
+    margin-left: 0;
+    padding: 0 14px;
+}
+
+.top-nav .icon {
+    color: var(--text-color-misc);
+    font-family: var(--font-icon);
+    font-size: 24px;
+    font-weight: 400;
+    min-width: 48px;
+    width: 48px;
+    border-radius: 100%;
+    justify-content: center;
+}
+
+.top-nav a:hover {
+    background: hsl(0 0% 0% / 0.04);
+}
+
+.top-nav a:active {
+    background: hsl(0 0% 0% / 0.15);
+}
+
+.top-nav > *:last-child {
+    margin-right: 24px;
+}
+
+.content {
+    padding-top: calc(64px + 24px + 72px);
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 32px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.content > .title {
+    font-size: 56px;
+    font-weight: 300;
+    margin: 0;
+    margin-bottom: 52px;
+    margin-left: 4px;
+    text-align: center;
+}
+
+.top-nav:before {
+    content: '';
+    display: block;
+    height: 100px;
+    background: linear-gradient(var(--background-color), transparent);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 14px;
+    pointer-events: none;
+    touch-action: none;
+    z-index: -1;
+}
+
+.files a {
+    width: 205px;
+    height: 48px;
+    border: 1px solid hsl(0 0% 0% / 0.15);
+    border-radius: 6px;
+    margin: 4px 6px;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(0,0,0,.72);
+    font-size: 13px;
+}
+
+.files a:before {
+    content: 'insert_photo';
+    font-family: var(--font-icon);
+    font-size: 18px;
+    color: #5f6368;
+    padding: 0 16px;
+}
+
+.top-nav > * {
+    
+    background: hsl(0deg 0% 100% / 80%);
+    box-shadow: 0 0 20px white, 0 0 20px white, 0 0 20px white;
+}

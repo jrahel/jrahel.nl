@@ -1,7 +1,8 @@
 _site
 .sass-cache
 .jekyll-metadata
-dev
-.bundle
+vendor
 Gemfile
 Gemfile.lock
+.bundle
+.wip

@@ -1,1 +1,15 @@
-name: jrahel.nl
+title: J Rahel
+description:
+theme: null
+layouts_dir: ./server/templates
+includes_dir: ./server/templates
+markdown: kramdown
+plugins:
+  - kramdown
+  - jekyll-default-layout
+  - jekyll-github-metadata
+  - jekyll-optional-front-matter
+  - jekyll-remote-theme
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
