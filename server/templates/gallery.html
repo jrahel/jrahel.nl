@@ -11,7 +11,7 @@
 <link href="/client/fonts/open-sans/open-sans.css" rel="stylesheet">
 <link href="/client/fonts/ubuntu/ubuntu.css" rel="stylesheet">
 <link href="/client/fonts/material-icons/material-icons.css" rel="stylesheet">
-<!-- <script src="/client/scripts/turbolinks.js"></script>
+<script src="/client/scripts/turbolinks.js"></script><!-- 
 <script type="module" src="/client/scripts/gallery.js"></script> -->
 
 <header class="top-nav">
@@ -33,14 +33,13 @@
 					ignored contains otherPage.url or 
 					urlPrefix2 == '/client/' or
 					urlPrefix2 == '/server/' %}{%
-				if otherPage.name == 'index.md' or
-						otherPage.name == 'index.html' %}{%
+				if otherPage.title == null %}{%
 					assign endIndex = otherPage.url | size | minus: 2 %}{%
-					assign otherPageTrimmedPath = otherPage.url | slice: 1, endIndex 
-					%}		<a href="{{ otherPage.url }}">{{ otherPageTrimmedPath }}</a>
+					assign otherPageTrimmedPath = otherPage.url | slice: 1, endIndex | replace: "-", " " | replace: "_", " "
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPageTrimmedPath }}</a>
 {%				else
-					%}		<a href="{{ otherPage.url }}">{{ otherPage.name }}</a>
-{%				endif  %}{%
+					%}		<a href="{{ otherPage.url }}" data-type="{{ otherPage.layout }}">{{ otherPage.title }}</a>
+{%				endif %}{%
 			endunless %}{%
 		endfor %}{% 
 		 
@@ -51,9 +50,15 @@
 					page.url == static_file.path or
 					ignored contains static_file.path or 
 					urlPrefix2 == '/client/' or
-					urlPrefix2 == '/server/'
-				%}		<a href="{{ static_file.path }}">{{ static_file.name }}</a>
-{%
+					urlPrefix2 == '/server/' %}{%
+				assign dotIndex = static_file.name | size | minus: 4 %}{%
+				assign fourthCharFromRight = static_file.name | slice: dotIndex, 1 %}{%
+				if fourthCharFromRight == '.' %}{%
+				assign filenameWithoutExtension = static_file.name | slice: 0, dotIndex | replace: "-", " " | replace: "_", " "
+					%}		<a href="{{ static_file.path }}">{{ filenameWithoutExtension }}</a>
+{%				else
+					%}		<a href="{{ static_file.path }}">{{ static_file.name | replace: "-", " " | replace: "_", " " }}</a>
+{%				endif %}{%
 			endunless %}{%
 		endfor
 	%}</section>
