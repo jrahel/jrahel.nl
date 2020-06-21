@@ -10,6 +10,7 @@
     flex-direction: row;
     /* justify-content: space-between; */
     align-items: center;
+    z-index: 100;
 }
 
 .top-nav > * {
@@ -26,6 +27,7 @@
     height: 31px;
     margin-left: 0;
     padding: 0 14px;
+    padding-right: 0;
 }
 
 .top-nav .icon {
@@ -83,6 +85,10 @@
     z-index: -1;
 }
 
+.files {
+    text-align: center;
+}
+
 .files a {
     width: 205px;
     height: 48px;
@@ -96,6 +102,8 @@
     padding-right: 15px;
     display: inline-block;
     line-height: 48px;
+    text-align: left;
+    position: relative;
 }
 
 .files a:before {
@@ -112,7 +120,45 @@
 }
 
 .top-nav > * {
-    
     background: hsl(0deg 0% 100% / 80%);
     box-shadow: 0 0 20px white, 0 0 20px white, 0 0 20px white;
+    text-shadow: 0 0 20px white, 0 0 20px white;
+}
+
+
+.files a.with-thumbnail {
+    height: 164px;
+}
+
+.files a.with-thumbnail .thumb {
+    display: block;
+    height: 115px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid hsl(0 0% 0% / 0.15);
+    object-fit: cover;
+}
+
+.files a.with-thumbnail .label {
+    position: absolute;
+    bottom: 0;
+    left: 46px;
+}
+
+.files a.with-thumbnail:before {
+    position: absolute;
+    bottom: 0;
+}
+
+@media (max-width: 500px) {
+    .content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .files a {
+        width: 200px;
+        margin: 0;
+    }
 }

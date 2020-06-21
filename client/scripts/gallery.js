@@ -1,16 +1,16 @@
-window.gallery = {
-	index: null,
+const gallery = {
+	thumbnailCache: {},
 
 	async init() {
-		this.index = await (await fetch("/server/data-index.json")).json();
-		console.log("index", this.index);
+		console.log("init");
+		this.updateTitleBar();
+		this.displayThumbnails();
+	},
+
+	updateTitleBar() {
 		const titleElement = document.querySelector(".content > .title");
 		if (location.pathname == "/") {
-			document.querySelector(".top-nav .back").style.display = "none"; 
-			// TODO: show sidebar button instead
-			const siteTitleElement = document.querySelector(".top-nav .site-title");
-			titleElement.textContent = siteTitleElement.textContent;
-			siteTitleElement.textContent = "";
+			document.querySelector(".top-nav").style.display = "none"; 
 		}
 		if (titleElement.textContent == "") {
 			const path = location.pathname.split("/").filter(s => s != "");
@@ -20,22 +20,69 @@ window.gallery = {
 			document.title = title;
 			titleElement.textContent = title;
 		}
-		const descendants = this.index.filter(p => p.startsWith(location.pathname));
-		const existingDescendants = new Set(document.querySelectorAll(".files a"));
-		const parent = document.querySelector(".files");
-		for (var descendant of descendants) {
-			if (! existingDescendants.has(descendant)) {
-				const a = document.createElement("a");
-				a.href = descendant;
-				const name = descendant
-						.replace(new RegExp("^.*[\\\/]"), '')
-						.replace(new RegExp("\\.[^.]+$"), "");
-				a.textContent = name;
-				parent.appendChild(a);
+	},
+
+	async displayThumbnails() {
+		const promises = [];
+		for (var imageLink of document.querySelectorAll(".files a")) {
+			const finalImageLink = imageLink;
+			promises.push((async() => { 
+				const imageUrl = finalImageLink.href;
+				if (! imageUrl.endsWith(".jpg")) {
+					return;
+				}
+				console.log("image: " + imageUrl);
+				var thumbUrl;
+				if (this.thumbnailCache[imageUrl]) {
+					thumbUrl = this.thumbnailCache[imageUrl];
+				} else {
+					thumbUrl = await this.getThumbnailUrl(imageUrl);
+					this.thumbnailCache[imageUrl] = thumbUrl;
+				}
+				const thumbImg = document.createElement("img");
+				thumbImg.src = thumbUrl;
+				thumbImg.className = "thumb";
+				const label = document.createElement("span");
+				label.textContent = finalImageLink.textContent;
+				label.className = "label";
+				finalImageLink.textContent = "";
+				finalImageLink.appendChild(thumbImg);
+				finalImageLink.appendChild(label);
+				finalImageLink.classList.add("with-thumbnail");
+			})());
+		}
+		await Promise.all(promises);
+	},
+
+	async getThumbnailUrl(imageUrl) {
+		const bytesLength = Math.pow(2, 14);
+		const thumbHeaders = { headers: { range: "bytes=0-" + (bytesLength-1)} };
+		var thumbBytes = await (await fetch(imageUrl + "?bytes=" + bytesLength, thumbHeaders)).blob();
+		const bytesArray = new Uint8Array(await thumbBytes.arrayBuffer());
+		var start = null;
+		var end = null;
+		for (var i = 2; i < bytesArray.length; i++) {
+			if (bytesArray[i] == 0xFF) {
+				if (start == null) {
+					if (bytesArray[i + 1] == 0xD8) {
+						start = i;
+					}
+				} else {
+					if (bytesArray[i + 1] == 0xD9) {
+						end = i+2;
+						break;
+					}
+				}
 			}
 		}
-
+		if (start != null && end != null) {
+			console.log("thumbnail found", imageUrl)
+			thumbBytes = new Blob([bytesArray.slice(start, end).buffer], {type: "image/jpeg"});
+		}
+		return URL.createObjectURL(thumbBytes);
 	}
 };
 
-window.gallery.init();
+// gallery.init();
+document.addEventListener("turbolinks:load", gallery.init.bind(gallery));
+window.gallery = gallery;
