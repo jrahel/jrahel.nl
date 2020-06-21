@@ -4,15 +4,23 @@ const gallery = {
 	async init() {
 		console.log("init");
 		this.updateTitleBar();
+		this.updateFileNames();
 		this.displayThumbnails();
+	},
+
+	updateFileNames() {
+		for (var imageLink of document.querySelectorAll(".files a")) {
+			imageLink.textContent = imageLink
+					.textContent
+					.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		}
 	},
 
 	updateTitleBar() {
 		const titleElement = document.querySelector(".content > .title");
 		if (location.pathname == "/") {
 			document.querySelector(".top-nav").style.display = "none"; 
-		}
-		if (titleElement.textContent == "") {
+		} else if (titleElement.textContent == "") {
 			const path = location.pathname.split("/").filter(s => s != "");
 			const title = path[path.length-1]
 					.replace(/[_-]/g, " ")
@@ -25,13 +33,13 @@ const gallery = {
 	async displayThumbnails() {
 		const promises = [];
 		for (var imageLink of document.querySelectorAll(".files a")) {
+			// TODO: load one by one and watch for navigation started event to abort
 			const finalImageLink = imageLink;
 			promises.push((async() => { 
 				const imageUrl = finalImageLink.href;
 				if (! imageUrl.endsWith(".jpg")) {
 					return;
 				}
-				console.log("image: " + imageUrl);
 				var thumbUrl;
 				if (this.thumbnailCache[imageUrl]) {
 					thumbUrl = this.thumbnailCache[imageUrl];
@@ -50,6 +58,9 @@ const gallery = {
 				finalImageLink.appendChild(label);
 				finalImageLink.classList.add("with-thumbnail");
 			})());
+			if (promises.length > 4) {
+				await Promise.all(promises);
+			}
 		}
 		await Promise.all(promises);
 	},
@@ -83,6 +94,5 @@ const gallery = {
 	}
 };
 
-// gallery.init();
 document.addEventListener("turbolinks:load", gallery.init.bind(gallery));
 window.gallery = gallery;
