@@ -20,14 +20,10 @@ const gallery = {
 		const titleElement = document.querySelector(".content > .title");
 		if (location.pathname == "/") {
 			document.querySelector(".top-nav").style.display = "none"; 
-		} else if (titleElement.textContent == "") {
-			const path = location.pathname.split("/").filter(s => s != "");
-			const title = path[path.length-1]
-					.replace(/[_-]/g, " ")
-					.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
-			document.title = title;
-			titleElement.textContent = title;
 		}
+		const title = titleElement.textContent.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+		document.title = title;
+		titleElement.textContent = title;
 	},
 
 	async displayThumbnails() {

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
-<title>{{ page.title | default: site.title }}</title>
+<title>{%
+	assign urlNameEndIndex = page.url | size | minus: 2 %}{%
+	assign albumName = page.url | slice: 1, urlNameEndIndex | replace: "-", " " | replace: "_", " " %}{{ page.title | default: albumName }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
 <link href="/client/favicon.ico" rel="shortcut icon"/>
@@ -14,12 +16,20 @@
 <script defer src="/client/scripts/turbolinks.js"></script>
 <script defer type="module" src="/client/scripts/gallery.js"></script>
 
+<video loop muted autoplay poster="/client/background.jpg" class="background" data-turbolinks-permanent>
+	<source src="/client/background.mp4" type="video/mp4">
+</video>
+
 <header class="top-nav">
 	<a class="icon back" href="..">arrow_back</a>
 	<h1 class="site-title">{{ site.title }}</h1>
 </header>
 <article class="content">
-	<h1 class="title">{{ page.title | default: site.title }}</h1>
+	<h1 class="title">{%
+		assign urlNameEndIndex = page.url | size | minus: 2 %}{%
+		assign albumName = page.url | slice: 1, urlNameEndIndex | replace: "-", " " | replace: "_", " " %}
+		{{ page.title | default: albumName }}
+	</h1>
 
 	<section class="files">{%
 		assign ignored = '/404.html,/,/feed.xml,/sitemap.xml,/robots.txt,/CNAME,/assets/css/style.css' %}{%

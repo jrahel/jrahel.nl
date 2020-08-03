@@ -16,6 +16,7 @@ body {
     align-items: center;
     z-index: 100;
     pointer-events: none;
+    overflow-y: visible;
 }
 
 .top-nav > * {
@@ -47,11 +48,11 @@ body {
 }
 
 .top-nav a:hover {
-    background: hsl(0 0% 0% / 0.04);
+    background: hsl(0deg 0% 100% / 60%);
 }
 
 .top-nav a:active {
-    background: hsl(0 0% 0% / 0.15);
+    background: hsl(0deg 0% 100% / 60%);
 }
 
 .top-nav > *:last-child {
@@ -80,7 +81,7 @@ body {
     content: '';
     display: block;
     height: 100px;
-    background: linear-gradient(var(--background-color), transparent);
+    background: linear-gradient(var(--background-color), rgba());
     position: fixed;
     top: 0;
     left: 0;
@@ -109,6 +110,7 @@ body {
     line-height: 48px;
     text-align: left;
     position: relative;
+    vertical-align: top;
 }
 
 .files a:before {
@@ -168,7 +170,7 @@ body {
         margin: 0;
     }
 }
-
+/* 
 ::-webkit-scrollbar {
     width: 18px;
     height: 18px;
@@ -196,4 +198,20 @@ body {
 
 ::-webkit-scrollbar-corner {
     background-color: transparent;
+} */
+
+.background {
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    /* opacity: 0.8; */
+    z-index: -1;
+}
+
+.files a {
+    /* backdrop-filter: blur(20px); */
+    background: #ffffff6b;
 }
