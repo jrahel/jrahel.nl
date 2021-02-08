@@ -60,7 +60,8 @@
 					page.url == static_file.path or
 					ignored contains static_file.path or 
 					urlPrefix2 == '/client/' or
-					urlPrefix2 == '/server/'
+					urlPrefix2 == '/server/' or
+		                        static_file.path == '/git.html'
 				%}		<a href="{{ static_file.path }}">{{ static_file.basename | replace: "-", " " | replace: "_", " " }}</a>
 {%			endunless %}{%
 		endfor
